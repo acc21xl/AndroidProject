@@ -23,6 +23,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.ui.layout.ContentScale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingText(message = "Happy Birthday Sam!", from = "From Emma")
+                    GreetingImage(message = "Happy Birthday Sam!", from = "From Emma")
                 }
             }
         }
@@ -46,21 +49,22 @@ class MainActivity : ComponentActivity() {
 fun GreetingText(message: String, from : String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(8.dp),   //间距为8
-        verticalArrangement = Arrangement.Center //used to let the comment in the center
+        verticalArrangement = Arrangement.SpaceAround //used to let the comment in the center
     ) {
         Text(
             text = message,
-            fontSize = 100.sp,
-            lineHeight = 116.sp,
+            fontSize = 90.sp,
+            lineHeight = 110.sp,
             textAlign = TextAlign.Center
         )
 
         Text(
             text = from,
-            fontSize = 36.sp,
+            fontSize = 35.sp,
             modifier = Modifier
                 .padding(16.dp)
                 .align(alignment = Alignment.End)
+
         )
     }
 }
@@ -69,7 +73,16 @@ fun GreetingText(message: String, from : String, modifier: Modifier = Modifier) 
 @Composable
 fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier){
     val image = painterResource(R.drawable.androidparty)
-    androidx.compose.foundation.Image(painter = image, contentDescription = null)
+    Box{
+        androidx.compose.foundation.Image(painter = image, contentDescription = null, contentScale = ContentScale.Crop, alpha = 0.5F)
+        // contentScale 均匀缩放图片保持一定长宽比, alpha更改图片透明度，值越小透明度越高
+        GreetingText(message = message,
+                    from = from,
+                    modifier = modifier
+                        .fillMaxSize()   //make an element occupy all avaliable space
+                        .padding(8.dp)
+        )
+    }
 }
 
 
